@@ -5,41 +5,49 @@ import time
 now = datetime.datetime.now()
 h, m, s = now.hour, now.minute, now.second
 
-# hand angles (SVG rotate, 0 = pointing up)
 hour_a = (h % 12) * 30 + m * 0.5
 min_a = m * 6
 sec_a = s * 6
 
 digital = now.strftime("%H:%M:%S")
 tz_label = time.tzname[0] if time.tzname else "local"
-synced = now.strftime("%d %b %Y · %H:%M UTC%z")
+synced = now.strftime("%d %b · %H:%M")
 
 svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="850" height="200" viewBox="0 0 850 200">
   <defs>
-    <filter id="nglow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <linearGradient id="pbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff0fc"/>
+      <stop offset="50%" stop-color="#eafaff"/>
+      <stop offset="100%" stop-color="#f6ffe8"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="45%" stop-color="#e6ecf7"/>
+      <stop offset="55%" stop-color="#aebadb"/>
+      <stop offset="100%" stop-color="#f7fbff"/>
+    </linearGradient>
   </defs>
-  <rect width="850" height="200" fill="#02000d"/>
+  <rect width="850" height="200" fill="url(#pbg)"/>
   <g transform="translate(170,100)">
-    <circle r="78" fill="#0d0620" stroke="#8b5cf6" stroke-width="3"/>
-    <g stroke="#a78bfa" stroke-width="2">
-      <line y1="-66" y2="-72"/><line x1="33" y1="-57.2" x2="36" y2="-62.4"/><line x1="57.2" y1="-33" x2="62.4" y2="-36"/><line x1="66" x2="72"/><line x1="57.2" y1="33" x2="62.4" y2="36"/><line x1="33" y1="57.2" x2="36" y2="62.4"/><line y1="66" y2="72"/><line x1="-33" y1="57.2" x2="-36" y2="62.4"/><line x1="-57.2" y1="33" x2="-62.4" y2="36"/><line x1="-66" x2="-72"/><line x1="-57.2" y1="-33" x2="-62.4" y2="-36"/><line x1="-33" y1="-57.2" x2="-36" y2="-62.4"/>
+    <circle r="80" fill="#ffffff" stroke="url(#ring)" stroke-width="10"/>
+    <circle r="80" fill="none" stroke="#ffb3ec" stroke-width="2"/>
+    <g stroke="#c9a4ff" stroke-width="2.5">
+      <line y1="-64" y2="-72"/><line x1="33" y1="-55.4" x2="36.4" y2="-60.9"/><line x1="55.4" y1="-33" x2="60.9" y2="-36.4"/><line x1="64" x2="72"/><line x1="55.4" y1="33" x2="60.9" y2="36.4"/><line x1="33" y1="55.4" x2="36.4" y2="60.9"/><line y1="64" y2="72"/><line x1="-33" y1="55.4" x2="-36.4" y2="60.9"/><line x1="-55.4" y1="33" x2="-60.9" y2="36.4"/><line x1="-64" x2="-72"/><line x1="-55.4" y1="-33" x2="-60.9" y2="-36.4"/><line x1="-33" y1="-55.4" x2="-36.4" y2="-60.9"/>
     </g>
-    <line x1="0" y1="6" x2="0" y2="-38" stroke="#ffffff" stroke-width="5" stroke-linecap="round" transform="rotate({hour_a:.1f})"/>
-    <line x1="0" y1="8" x2="0" y2="-56" stroke="#e9d5ff" stroke-width="3.5" stroke-linecap="round" transform="rotate({min_a:.1f})"/>
-    <line x1="0" y1="12" x2="0" y2="-64" stroke="#ff5470" stroke-width="2" stroke-linecap="round">
+    <line x1="0" y1="6" x2="0" y2="-38" stroke="#8b5cf6" stroke-width="5" stroke-linecap="round" transform="rotate({hour_a:.1f})"/>
+    <line x1="0" y1="8" x2="0" y2="-54" stroke="#00c8ff" stroke-width="3.5" stroke-linecap="round" transform="rotate({min_a:.1f})"/>
+    <line x1="0" y1="12" x2="0" y2="-62" stroke="#ff6ec7" stroke-width="2" stroke-linecap="round">
       <animateTransform attributeName="transform" type="rotate" from="{sec_a}" to="{sec_a + 360}" dur="60s" repeatCount="indefinite"/>
     </line>
-    <circle r="4.5" fill="#ff5470"/>
+    <circle r="4.5" fill="#ff6ec7"/>
     <circle r="1.8" fill="#ffffff"/>
   </g>
-  <text x="290" y="70" font-family="Consolas, monospace" font-size="34" font-weight="bold" fill="#ffffff" filter="url(#nglow)">{html.escape(digital)}</text>
-  <text x="290" y="100" font-family="Consolas, monospace" font-size="13" fill="#8b5cf6">this clock on this profile is REAL.</text>
-  <text x="290" y="122" font-family="Consolas, monospace" font-size="13" fill="#8b5cf6">a robot re-renders it every 15 minutes,</text>
-  <text x="290" y="144" font-family="Consolas, monospace" font-size="13" fill="#8b5cf6">even when nobody is watching.</text>
-  <text x="290" y="176" font-family="Consolas, monospace" font-size="11" fill="#6b7280">last sync: {html.escape(synced)} ({html.escape(tz_label)})</text>
-  <circle cx="270" cy="64" r="5" fill="#2ea043"><animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite"/></circle>
+  <text x="290" y="70" font-family="Verdana" font-size="32" font-weight="bold" fill="#e24fb4">{html.escape(digital)}</text>
+  <text x="290" y="102" font-family="Verdana" font-size="12.5" fill="#7a5fb8">this clock shows the REAL time. robots re-render it</text>
+  <text x="290" y="122" font-family="Verdana" font-size="12.5" fill="#7a5fb8">every 15 minutes, even while you sleep ✦</text>
+  <text x="290" y="164" font-family="Consolas, monospace" font-size="11" fill="#00b8e0">(last sync: {html.escape(synced)} · {html.escape(tz_label)})</text>
+  <text x="812" y="40" font-size="15" fill="#ff6ec7">✦<animate attributeName="opacity" values="0.2;1;0.2" dur="1.4s" repeatCount="indefinite"/></text>
+  <circle cx="270" cy="64" r="5" fill="#00d0a0"><animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite"/></circle>
 </svg>
 '''
 

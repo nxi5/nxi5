@@ -1,21 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="850" height="220" viewBox="0 0 850 220">
   <defs>
-    <radialGradient id="ball" cx="38%" cy="30%" r="80%">
-      <stop offset="0%" stop-color="#e9d5ff"/>
-      <stop offset="45%" stop-color="#7c3aed"/>
-      <stop offset="100%" stop-color="#2e1065"/>
+    <linearGradient id="y2kbg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fff0fc"/>
+      <stop offset="50%" stop-color="#eafaff"/>
+      <stop offset="100%" stop-color="#f6ffe8"/>
+    </linearGradient>
+    <radialGradient id="orb" cx="38%" cy="30%" r="85%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="40%" stop-color="#ffb3ec"/>
+      <stop offset="75%" stop-color="#8fd8ff"/>
+      <stop offset="100%" stop-color="#c0a4ff"/>
     </radialGradient>
-    <filter id="spark"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
   <rect width="850" height="220" fill="#0a0118"/>
   <g>
-    <circle cx="170" cy="110" r="72" fill="url(#ball)" opacity="0.92"/>
-    <circle cx="170" cy="110" r="72" fill="none" stroke="#c4b5fd" stroke-width="2"/>
-    <ellipse cx="148" cy="82" rx="20" ry="10" fill="#ffffff" opacity="0.35">
-      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="2.2s" repeatCount="indefinite"/>
+    <circle cx="170" cy="105" r="70" fill="url(#orb)"/>
+    <circle cx="170" cy="105" r="70" fill="none" stroke="#ff9de2" stroke-width="3"/>
+    <ellipse cx="150" cy="76" rx="22" ry="10" fill="#ffffff" opacity="0.75">
+      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2s" repeatCount="indefinite"/>
     </ellipse>
-    <path d="M120 178 Q170 195 220 178 L204 200 Q170 210 136 200 Z" fill="#3b2a63"/>
-    <text x="170" y="118" text-anchor="middle" font-size="26" fill="#f5f3ff">🔮</text>
+    <path d="M118 172 Q170 190 222 172 L206 196 Q170 206 134 196 Z" fill="#e2e8f5"/>
+    <text x="170" y="116" text-anchor="middle" font-size="26">🔮</text>
   </g>
   <text x="300" y="66" font-family="Consolas, monospace" font-size="15" fill="#7dd3fc">@nxi5 asked: "will this profile ever stop being haunted?"</text>
   <text x="300" y="112" font-family="Consolas, monospace" font-size="17" font-weight="bold" fill="#e9d5ff">the genie says:</text>
